@@ -1,28 +1,53 @@
 import TaskCard from "../components/TaskCard";
 import TodoModal from "../components/Modal";
 import { type TaskCardProps } from "../libs/Todolist";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+const STORAGE_KEY = "todolist-tasks";
+const defaultTasks: TaskCardProps[] = [
+  {
+    id: "1",
+    title: "Six Seven",
+    description: "OATCOM",
+    isDone: false,
+  },
+];
+
+function loadTasks(): TaskCardProps[] {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : defaultTasks;
+  } catch {
+    return defaultTasks; // เผื่อข้อมูลใน localStorage เสีย
+  }
+}
 
 function App() {
-  const [tasks, setTasks] = useState<TaskCardProps[]>([]);
+  const [tasks, setTasks] = useState<TaskCardProps[]>(loadTasks);
 
-  const handleAdd = (newTask: TaskCardProps) => {
-    console.log("TODO handleAdd", newTask);
-  };
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+  }, [tasks]);
 
-  const deleteTask = (taskId: string) => {
-    console.log("TODO deleteTask", taskId);
-  };
+  const handleAdd = (newTask: TaskCardProps) => setTasks([...tasks, newTask]);
 
-  const toggleDoneTask = (taskId: string) => {
-    console.log("TODO toggleDoneTask", taskId);
-  };
+  const deleteTask = (taskId: string) =>
+    setTasks(tasks.filter((t) => t.id !== taskId));
+
+  const toggleDoneTask = (taskId: string) =>
+    setTasks(
+      tasks.map((t) => (t.id === taskId ? { ...t, isDone: !t.isDone } : t)),
+    );
+
+  const allCount = tasks.length;
+  const doneCount = tasks.filter((t) => t.isDone).length;
 
   return (
     <div className="col-12 m-2 p-0">
       <div className="container text-center">
         <h2>Todo List</h2>
-        <span className="m-2">All : () Done : ()</span>
+        <span className="m-2">
+          All : ({allCount}) Done : ({doneCount})
+        </span>
 
         <div>
           <button
