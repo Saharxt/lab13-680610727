@@ -4,7 +4,7 @@ import { type SidebarProps } from "../libs/Sidebar";
 export default function Sidebar({ userName, type }: SidebarProps) {
   return (
     <aside
-      className="d-flex align-items-start flex-column p-4 bg-dark text-white min-vh-100"
+      className="d-flex align-items-start flex-column p-4 bg-info-subtle text-white min-vh-100 border-end border-secondary"
       style={{ width: "auto", height: "100%", overflowY: "auto" }}
       data-bs-theme="dark"
     >
@@ -37,8 +37,8 @@ export default function Sidebar({ userName, type }: SidebarProps) {
           </ul>
         </nav>
       </div>
-      <div>
-        <p className="text-white">
+      <div className="w-100 pt-3 border-top border-secondary text-center">
+        <p className="text-white fs-5 fw-semibold mb-0">
           {userName} : {type}
         </p>
       </div>

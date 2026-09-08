@@ -2,6 +2,7 @@ import TaskCard from "../components/TaskCard";
 import TodoModal from "../components/Modal";
 import { type TaskCardProps } from "../libs/Todolist";
 import { useState, useEffect } from "react";
+
 const STORAGE_KEY = "todolist-tasks";
 const defaultTasks: TaskCardProps[] = [
   {
@@ -15,9 +16,9 @@ const defaultTasks: TaskCardProps[] = [
 function loadTasks(): TaskCardProps[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : defaultTasks;
+    return raw ? JSON.parse(raw) : defaultTasks; //parse คือการทำ string to Array
   } catch {
-    return defaultTasks; // เผื่อข้อมูลใน localStorage เสีย
+    return defaultTasks;
   }
 }
 
@@ -45,9 +46,38 @@ function App() {
     <div className="col-12 m-2 p-0">
       <div className="container text-center">
         <h2>Todo List</h2>
-        <span className="m-2">
-          All : ({allCount}) Done : ({doneCount})
-        </span>
+
+        <div className="d-flex justify-content-center gap-3 my-4">
+          <div
+            className="px-4 py-3 text-center"
+            style={{
+              backgroundColor: "#FFFFFF",
+              border: "1px solid #D6C7AE",
+              borderRadius: "16px",
+              minWidth: "110px",
+            }}
+          >
+            <div className="fs-3 fw-bold" style={{ color: "#3E3529" }}>
+              {allCount}
+            </div>
+            <small style={{ color: "#8A7B65" }}>All</small>
+          </div>
+
+          <div
+            className="px-4 py-3 text-center"
+            style={{
+              backgroundColor: "#FFFFFF",
+              border: "1px solid #D6C7AE",
+              borderRadius: "16px",
+              minWidth: "110px",
+            }}
+          >
+            <div className="fs-3 fw-bold" style={{ color: "#3E3529" }}>
+              {doneCount}
+            </div>
+            <small style={{ color: "#8A7B65" }}>Done</small>
+          </div>
+        </div>
 
         <div>
           <button
