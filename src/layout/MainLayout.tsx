@@ -2,7 +2,6 @@ import { Outlet } from "react-router";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { theme } from "../libs/theme";
 
 export default function MainLayout() {
   return (
@@ -14,10 +13,7 @@ export default function MainLayout() {
         <div className="col-10 col-md-10 p-0">
           <Header />
 
-          <main
-            className="flex-grow-1 p-4 min-vh-100"
-            style={{ backgroundColor: theme.page, color: theme.text }}
-          >
+          <main className="flex-grow-1 p-4 min-vh-100">
             <Outlet />
           </main>
 
